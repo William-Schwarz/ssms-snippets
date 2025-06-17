@@ -1,0 +1,29 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Create Raiserror</Title>
+      <Shortcut>CreateRaiserror</Shortcut>
+      <Description>Snippet para criar um raiserror.</Description>
+      <Author>William Schwarz</Author>
+    </Header>
+    <Snippet>
+      <Code Language="SQL">
+        <![CDATA[if (1 = 1)
+begin
+  declare @var1 int = 42;
+  declare @var2 varchar(100) = 'Erro';
+
+  raiserror (
+      '%d %s'
+      ,16
+      ,1
+      ,@var1
+      ,@var2
+      );
+
+  return;
+end;]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

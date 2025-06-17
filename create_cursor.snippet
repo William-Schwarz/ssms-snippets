@@ -1,0 +1,43 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Create Cursor</Title>
+      <Shortcut>CreateCursor</Shortcut>
+      <Description>Snippet para criar um cursor.</Description>
+      <Author>William Schwarz</Author>
+    </Header>
+    <Snippet>
+      <Code Language="SQL">
+        <![CDATA[declare @var1 datatype;
+declare @var2 datatype;
+
+declare cursor_name cursor
+for
+select column1
+  ,column2
+from table_name
+where condition;
+
+open cursor_name;
+
+fetch next
+from cursor_name
+into @var1
+  ,@var2;
+
+while @@FETCH_STATUS = 0
+begin
+  -- Processar cada linha recuperada pelo cursor
+  fetch next
+  from cursor_name
+  into @var1
+    ,@var2;
+end;
+
+close cursor_name;
+
+deallocate cursor_name;]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

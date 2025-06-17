@@ -1,0 +1,24 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Create Function</Title>
+      <Shortcut>CreateFunction</Shortcut>
+      <Description>Snippet para criar uma função.</Description>
+      <Author>William Schwarz</Author>
+    </Header>
+    <Snippet>
+      <Code Language="SQL">
+        <![CDATA[create function [schema_name].[function_name] (
+  @param1 data_type
+  ,@param2 data_type
+  )
+returns return_data_type
+as
+begin
+  -- function code
+  return result;
+end;]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

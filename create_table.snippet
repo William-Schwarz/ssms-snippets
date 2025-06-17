@@ -1,0 +1,20 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Create Table</Title>
+      <Shortcut>CreateTable</Shortcut>
+      <Description>Snippet para criar uma tabela.</Description>
+      <Author>William Schwraz</Author>
+    </Header>
+    <Snippet>
+      <Code Language="SQL">
+        <![CDATA[create table [schema_name].[table_name] (
+  [column1] [data_type] not null
+  ,[column2] [data_type] null
+  ,...
+  constraint [PK_table_name] primary key ([column1])
+  );]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

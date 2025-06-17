@@ -1,0 +1,59 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Merge Into</Title>
+			<Shortcut>MergeInto</Shortcut>
+			<Description>Snippet para criar um comando MERGE INTO no SQL Server.</Description>
+			<Author>William Schwarz (rev. SQL Expert GPT)</Author>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>TargetTable</ID>
+					<ToolTip>Tabela de destino</ToolTip>
+					<Default>TargetTable</Default>
+				</Literal>
+				<Literal>
+					<ID>SourceTable</ID>
+					<ToolTip>Tabela de origem</ToolTip>
+					<Default>SourceTable</Default>
+				</Literal>
+				<Literal>
+					<ID>KeyColumn</ID>
+					<ToolTip>Coluna chave para join</ToolTip>
+					<Default>Id</Default>
+				</Literal>
+				<Literal>
+					<ID>Column1</ID>
+					<ToolTip>Coluna 1</ToolTip>
+					<Default>Column1</Default>
+				</Literal>
+				<Literal>
+					<ID>Column2</ID>
+					<ToolTip>Coluna 2</ToolTip>
+					<Default>Column2</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="SQL">
+				<![CDATA[MERGE INTO $TargetTable$ AS target
+USING $SourceTable$ AS source
+  ON target.$KeyColumn$ = source.$KeyColumn$
+WHEN MATCHED THEN
+  UPDATE SET
+    target.$Column1$ = source.$Column1$,
+    target.$Column2$ = source.$Column2$
+WHEN NOT MATCHED BY TARGET THEN
+  INSERT (
+    $Column1$,
+    $Column2$
+  )
+  VALUES (
+    source.$Column1$,
+    source.$Column2$
+  )
+WHEN NOT MATCHED BY SOURCE THEN
+  DELETE;]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

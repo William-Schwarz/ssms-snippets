@@ -1,0 +1,65 @@
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Create API Procedure</Title>
+			<Shortcut>CreateApi</Shortcut>
+			<Description>Snippet para criação de procedure de API padrão.</Description>
+			<Author>William Schwarz</Author>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>ProcedureName</ID>
+					<ToolTip>Nome da procedure</ToolTip>
+					<Default>pApiRoleNameEndpointNameMethod</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="SQL">
+				<![CDATA[CREATE PROCEDURE dbo.$ProcedureName$
+  @Body XML = NULL
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  BEGIN TRY
+    EXEC dbo.pDebugProc @@PROCID, 'Início';
+
+    -- Exemplo de leitura do XML
+    DECLARE @var1 INT = @Body.value('(/body/var1)[1]', 'INT');
+
+    IF OBJECT_ID('tempdb..#temp') IS NOT NULL
+      DROP TABLE #temp;
+
+    SELECT
+      var1 = body.value('var1[1]', 'VARCHAR(128)')
+    INTO #temp
+    FROM @Body.nodes('/body/array') AS xmlp(body);
+
+    -- Retorno JSON com sucesso
+    SELECT dbo.fApiGetResultJSONWithMessage(
+      1,
+      NULL,
+      JSON_QUERY((
+        SELECT *
+        FROM $TableName$
+        FOR JSON PATH, INCLUDE_NULL_VALUES
+      )),
+      NULL, NULL, NULL
+    );
+  END TRY
+
+  BEGIN CATCH
+    DECLARE @ErrorMessage NVARCHAR(MAX) = dbo.fGetErrorMessage(ERROR_MESSAGE(), OBJECT_NAME(@@PROCID));
+
+    IF XACT_STATE() <> 0
+      ROLLBACK TRANSACTION;
+
+    SELECT dbo.fApiGetResultJSONWithMessage(0, NULL, @ErrorMessage, NULL, NULL, NULL);
+  END CATCH;
+
+  EXEC dbo.pDebugProc @@PROCID, 'Fim';
+END;]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
